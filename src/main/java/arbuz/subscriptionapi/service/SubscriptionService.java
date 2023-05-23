@@ -54,6 +54,12 @@ public class SubscriptionService {
 
     public Subscription showSubscription(Subscriber subscriber) {
 
+        Optional<Subscriber> optionalSubscriber = subscriberRepository.findByNumber(subscriber.getNumber());
+
+        if (!optionalSubscriber.isPresent()) return null;
+
+        subscriber.setId(optionalSubscriber.get().getId());
+
         Optional<Subscription> subscriptionOptional = subscriptionRepository.findBySubscriber(subscriber);
 
         if (!subscriptionOptional.isPresent()) return null;
